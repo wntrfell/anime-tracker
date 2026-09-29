@@ -467,8 +467,10 @@ body {
 /* Anime Grid */
 .anime-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 .anime-card {
