@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Settings') }} - Anime Tracker{% endblock %}
+
+{% block content %}
+<div class="settings-page reveal">
+    <div class="page-header">
+        <h1 class="page-title">{{ _('Settings') }}</h1>
+        <p class="page-subtitle">{{ _('Customize your experience') }}</p>
+    </div>
+    
+    <div class="settings-grid">
+        <div class="settings-card reveal">
+            <div class="settings-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+            </div>
+            <h3>{{ _('Appearance') }}</h3>
+            <p>{{ _('Theme and display settings') }}</p>
+            <div class="setting-option">
+                <label>{{ _('Language') }}</label>
+                <div class="language-switcher">
+                    <button onclick="setLanguage('en')" class="lang-btn {{ 'active' if session.get('language') == 'en' }}">English</button>
+                    <button onclick="setLanguage('ru')" class="lang-btn {{ 'active' if session.get('language') == 'ru' }}">Русский</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-card reveal">
+            <div class="settings-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </div>
+            <h3>{{ _('Account') }}</h3>
+            <p>{{ _('Manage your account settings') }}</p>
+            <button class="btn btn-secondary">{{ _('Sign In') }}</button>
+        </div>
+        
+        <div class="settings-card reveal">
+            <div class="settings-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+            </div>
+            <h3>{{ _('Privacy') }}</h3>
+            <p>{{ _('Control your privacy settings') }}</p>
+        </div>
+        
+        <div class="settings-card reveal">
+            <div class="settings-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+            </div>
+            <h3>{{ _('About') }}</h3>
+            <p>{{ _('Version 1.0.0') }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

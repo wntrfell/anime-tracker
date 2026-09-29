@@ -3,26 +3,94 @@
 {% block title %}{{ _('Home') }} - Anime Tracker{% endblock %}
 
 {% block content %}
-<div class="search-container">
-    <input type="text" 
-           class="search-box" 
-           id="searchInput" 
-           placeholder="{{ _('Search anime...') }}"
-           autocomplete="off">
-</div>
+<!-- Hero Carousel -->
+<section class="hero-carousel">
+    <div class="hero-slides">
+        {% for anime in featured %}
+        <div class="hero-slide {{ 'active' if loop.first else '' }}" 
+             style="background-image: linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.4) 50%, transparent 100%), url('{{ anime.bannerImage or anime.coverImage.large }}');">
+            <div class="hero-content">
+                <div class="hero-badge">{{ anime.format }}</div>
+                <h1 class="hero-title">{{ anime.title.english or anime.title.romaji }}</h1>
+                <div class="hero-meta">
+                    <span class="hero-score">⭐ {{ anime.averageScore or 'N/A' }}</span>
+                    <span class="hero-separator">•</span>
+                    <span>{{ anime.episodes or '?' }} {{ _('episodes') }}</span>
+                    <span class="hero-separator">•</span>
+                    <span>{{ anime.status }}</span>
+                </div>
+                <div class="hero-genres">
+                    {% for genre in anime.genres[:3] %}
+                    <span class="genre-tag">{{ genre }}</span>
+                    {% endfor %}
+                </div>
+                <p class="hero-description">
+                    {% if anime.description %}
+                        {{ anime.description|safe|truncate(250) }}
+                    {% else %}
+                        {{ _('No description available') }}
+                    {% endif %}
+                </p>
+                <div class="hero-buttons">
+                    <a href="/anime/{{ anime.id }}" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        {{ _('Watch Now') }}
+                    </a>
+                    <a href="/anime/{{ anime.id }}" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        {{ _('More Info') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <button class="carousel-btn prev-btn" onclick="changeSlide(-1)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+    </button>
+    <button class="carousel-btn next-btn" onclick="changeSlide(1)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+        </svg>
+    </button>
+    
+    <div class="carousel-progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+</section>
 
-<!-- Секция Trending -->
-<section class="anime-section">
-    <h2 class="section-title">{{ _('🔥 Trending Now') }}</h2>
-    <div class="anime-grid" id="trendingGrid">
+<!-- Trending Section -->
+<section class="content-section reveal">
+    <div class="section-header">
+        <h2 class="section-title">
+            <span class="title-icon">🔥</span>
+            {{ _('Trending Now') }}
+        </h2>
+        <a href="/search?type=trending" class="see-all">{{ _('See All') }} →</a>
+    </div>
+    <div class="anime-grid">
         {% for anime in trending %}
-        <div class="anime-card" onclick="window.location.href='/anime/{{ anime.id }}'">
-            <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
-            <div class="anime-card-info">
-                <div class="anime-card-title">{{ anime.title.english or anime.title.romaji }}</div>
-                <div class="anime-card-meta">
-                    <span>{{ anime.format }}</span>
-                    <span class="score">⭐ {{ anime.averageScore or 'N/A' }}</span>
+        <div class="anime-card reveal" onclick="window.location.href='/anime/{{ anime.id }}'">
+            <div class="card-image">
+                <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}" loading="lazy">
+                <div class="card-overlay">
+                    <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                <div class="card-meta">
+                    <span class="card-format">{{ anime.format }}</span>
+                    <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
                 </div>
             </div>
         </div>
@@ -30,95 +98,78 @@
     </div>
 </section>
 
-<!-- Секция Popular -->
-<section class="anime-section">
-    <h2 class="section-title">{{ _('⭐ Most Popular') }}</h2>
-    <div class="anime-grid" id="popularGrid">
+<!-- Popular Section -->
+<section class="content-section reveal">
+    <div class="section-header">
+        <h2 class="section-title">
+            <span class="title-icon">⭐</span>
+            {{ _('Most Popular') }}
+        </h2>
+        <a href="/search?type=popular" class="see-all">{{ _('See All') }} →</a>
+    </div>
+    <div class="anime-grid">
         {% for anime in popular %}
-        <div class="anime-card" onclick="window.location.href='/anime/{{ anime.id }}'">
-            <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
-            <div class="anime-card-info">
-                <div class="anime-card-title">{{ anime.title.english or anime.title.romaji }}</div>
-                <div class="anime-card-meta">
-                    <span>{{ anime.format }}</span>
-                    <span class="score">⭐ {{ anime.averageScore or 'N/A' }}</span>
+        <div class="anime-card reveal" onclick="window.location.href='/anime/{{ anime.id }}'">
+            <div class="card-image">
+                <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}" loading="lazy">
+                <div class="card-overlay">
+                    <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                <div class="card-meta">
+                    <span class="card-format">{{ anime.format }}</span>
+                    <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-</section>
-
-<!-- Результаты поиска (скрыты по умолчанию) -->
-<section class="anime-section" id="searchResults" style="display: none;">
-    <h2 class="section-title">{{ _('🔍 Search Results') }}</h2>
-    <div class="anime-grid" id="animeGrid"></div>
 </section>
 {% endblock %}
 
 {% block scripts %}
 <script>
-function setLanguage(lang) {
-    fetch(`/set_language/${lang}`)
-        .then(() => window.location.reload());
+// Carousel
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const progressBar = document.getElementById('progressBar');
+let slideInterval;
+const SLIDE_DURATION = 6000;
+
+function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    currentSlide = (index + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    resetProgress();
 }
 
-document.getElementById('searchInput').addEventListener('input', debounce(searchAnime, 500));
-
-async function searchAnime() {
-    const query = document.getElementById('searchInput').value;
-    const searchResults = document.getElementById('searchResults');
-    const trendingSection = document.querySelector('.anime-section:nth-child(2)');
-    const popularSection = document.querySelector('.anime-section:nth-child(3)');
-    
-    if (query.length < 2) {
-        searchResults.style.display = 'none';
-        trendingSection.style.display = 'block';
-        popularSection.style.display = 'block';
-        return;
-    }
-    
-    // Скрываем секции при поиске
-    trendingSection.style.display = 'none';
-    popularSection.style.display = 'none';
-    searchResults.style.display = 'block';
-    
-    const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
-    const animeList = await response.json();
-    displayAnime(animeList);
+function changeSlide(direction) {
+    showSlide(currentSlide + direction);
 }
 
-function displayAnime(animeList) {
-    const grid = document.getElementById('animeGrid');
-    if (animeList.length === 0) {
-        grid.innerHTML = '<p style="color: #8b6f9e;">Nothing found</p>';
-        return;
-    }
-    
-    grid.innerHTML = animeList.map(anime => `
-        <div class="anime-card" onclick="window.location.href='/anime/${anime.id}'">
-            <img src="${anime.coverImage.large}" alt="${anime.title.romaji}">
-            <div class="anime-card-info">
-                <div class="anime-card-title">${anime.title.english || anime.title.romaji}</div>
-                <div class="anime-card-meta">
-                    <span>${anime.format}</span>
-                    <span class="score">⭐ ${anime.averageScore || 'N/A'}</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
+function resetProgress() {
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    setTimeout(() => {
+        progressBar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+        progressBar.style.width = '100%';
+    }, 50);
 }
 
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+function startAutoSlide() {
+    slideInterval = setInterval(() => changeSlide(1), SLIDE_DURATION);
 }
+
+function stopAutoSlide() {
+    clearInterval(slideInterval);
+}
+
+document.querySelector('.hero-carousel').addEventListener('mouseenter', stopAutoSlide);
+document.querySelector('.hero-carousel').addEventListener('mouseleave', startAutoSlide);
+
+startAutoSlide();
+resetProgress();
 </script>
 {% endblock %}

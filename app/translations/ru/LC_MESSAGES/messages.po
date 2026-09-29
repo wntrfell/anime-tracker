@@ -18,3 +18,120 @@ msgstr "Манга"
 
 msgid "My List"
 msgstr "Мой список"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Watch History"
+msgstr "История просмотра"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "Trending Now"
+msgstr "Сейчас в тренде"
+
+msgid "Most Popular"
+msgstr "Самые популярные"
+
+msgid "See All"
+msgstr "Смотреть все"
+
+msgid "Watch Now"
+msgstr "Смотреть"
+
+msgid "More Info"
+msgstr "Подробнее"
+
+msgid "episodes"
+msgstr "эпизодов"
+
+msgid "No description available"
+msgstr "Описание недоступно"
+
+msgid "Discover something new"
+msgstr "Откройте для себя что-то новое"
+
+msgid "Search anime, manga & people..."
+msgstr "Поиск аниме, манги и людей..."
+
+msgid "Popular:"
+msgstr "Популярное:"
+
+msgid "Results for"
+msgstr "Результаты для"
+
+msgid "Customize your experience"
+msgstr "Настройте свой опыт"
+
+msgid "Appearance"
+msgstr "Внешний вид"
+
+msgid "Theme and display settings"
+msgstr "Настройки темы и отображения"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Account"
+msgstr "Аккаунт"
+
+msgid "Manage your account settings"
+msgstr "Управление настройками аккаунта"
+
+msgid "Sign In"
+msgstr "Войти"
+
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+msgid "Control your privacy settings"
+msgstr "Управление настройками конфиденциальности"
+
+msgid "About"
+msgstr "О приложении"
+
+msgid "Version 1.0.0"
+msgstr "Версия 1.0.0"
+
+msgid "Your saved anime and manga"
+msgstr "Ваши сохранённые аниме и манга"
+
+msgid "Your list is empty"
+msgstr "Ваш список пуст"
+
+msgid "Start adding anime and manga to your list"
+msgstr "Начните добавлять аниме и мангу в список"
+
+msgid "Browse Anime"
+msgstr "Смотреть аниме"
+
+msgid "Recently watched anime"
+msgstr "Недавно просмотренные аниме"
+
+msgid "No watch history yet"
+msgstr "История просмотра пуста"
+
+msgid "Start watching anime to build your history"
+msgstr "Начните смотреть аниме, чтобы создать историю"
+
+msgid "Discover Anime"
+msgstr "Открыть аниме"
+
+msgid "Studios"
+msgstr "Студии"
+
+msgid "Add to List"
+msgstr "Добавить в список"
+
+msgid "Share"
+msgstr "Поделиться"
+
+msgid "Anime not found"
+msgstr "Аниме не найдено"
+
+msgid "Go Home"
+msgstr "На главную"

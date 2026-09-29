@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ anime.title.english or anime.title.romaji }} - Anime Tracker{% endblock %}
+
+{% block content %}
+{% if anime %}
+<div class="anime-detail">
+    <div class="detail-hero" style="background-image: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.95) 100%), url('{{ anime.bannerImage or anime.coverImage.extraLarge }}');">
+        <div class="detail-content">
+            <div class="detail-poster">
+                <img src="{{ anime.coverImage.extraLarge or anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
+            </div>
+            <div class="detail-info">
+                <h1 class="detail-title">{{ anime.title.english or anime.title.romaji }}</h1>
+                {% if anime.title.romaji and anime.title.english %}
+                <p class="detail-alt-title">{{ anime.title.romaji }}</p>
+                {% endif %}
+                
+                <div class="detail-meta">
+                    <span class="detail-score">⭐ {{ anime.averageScore or 'N/A' }}</span>
+                    <span class="detail-separator">•</span>
+                    <span>{{ anime.format }}</span>
+                    <span class="detail-separator">•</span>
+                    <span>{{ anime.episodes or '?' }} {{ _('episodes') }}</span>
+                    <span class="detail-separator">•</span>
+                    <span>{{ anime.duration or '?' }} min</span>
+                    <span class="detail-separator">•</span>
+                    <span>{{ anime.status }}</span>
+                </div>
+                
+                <div class="detail-genres">
+                    {% for genre in anime.genres %}
+                    <span class="genre-tag">{{ genre }}</span>
+                    {% endfor %}
+                </div>
+                
+                {% if anime.studios and anime.studios.nodes %}
+                <div class="detail-studios">
+                    <span class="studios-label">{{ _('Studios') }}:</span>
+                    {% for studio in anime.studios.nodes %}
+                    <span class="studio-name">{{ studio.name }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <div class="detail-description">
+                    {% if anime.description %}
+                        {{ anime.description|safe }}
+                    {% else %}
+                        <p>{{ _('No description available') }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="detail-actions">
+                    <button class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        {{ _('Add to List') }}
+                    </button>
+                    <button class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"/>
+                            <circle cx="6" cy="12" r="3"/>
+                            <circle cx="18" cy="19" r="3"/>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                        </svg>
+                        {{ _('Share') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="error-state">
+    <h2>{{ _('Anime not found') }}</h2>
+    <a href="/" class="btn btn-primary">{{ _('Go Home') }}</a>
+</div>
+{% endif %}
+{% endblock %}

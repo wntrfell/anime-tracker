@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('My List') }} - Anime Tracker{% endblock %}
+
+{% block content %}
+<div class="list-page reveal">
+    <div class="page-header">
+        <h1 class="page-title">{{ _('My List') }}</h1>
+        <p class="page-subtitle">{{ _('Your saved anime and manga') }}</p>
+    </div>
+    
+    <div class="empty-state">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+        </svg>
+        <h3>{{ _('Your list is empty') }}</h3>
+        <p>{{ _('Start adding anime and manga to your list') }}</p>
+        <a href="/search" class="btn btn-primary">{{ _('Browse Anime') }}</a>
+    </div>
+</div>
+{% endblock %}

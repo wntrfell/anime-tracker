@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Search') }} - Anime Tracker{% endblock %}
+
+{% block content %}
+<div class="search-page">
+    <div class="search-hero">
+        <h1 class="search-title">{{ _('Discover something new') }}</h1>
+        <div class="search-box-large">
+            <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" 
+                   class="search-input-large" 
+                   id="searchInput" 
+                   value="{{ query }}"
+                   placeholder="{{ _('Search anime, manga & people...') }}"
+                   autocomplete="off">
+        </div>
+        
+        <div class="popular-tags">
+            <span class="tags-label">{{ _('Popular:') }}</span>
+            <button class="tag-btn" onclick="searchFor('Naruto')">Naruto</button>
+            <button class="tag-btn" onclick="searchFor('One Piece')">One Piece</button>
+            <button class="tag-btn" onclick="searchFor('Attack on Titan')">Attack on Titan</button>
+            <button class="tag-btn" onclick="searchFor('Demon Slayer')">Demon Slayer</button>
+            <button class="tag-btn" onclick="searchFor('Jujutsu Kaisen')">Jujutsu Kaisen</button>
+        </div>
+    </div>
+    
+    <div class="search-results" id="searchResults">
+        {% if query %}
+        <h2 class="results-title">{{ _('Results for') }} "{{ query }}"</h2>
+        <div class="anime-grid">
+            {% for anime in results %}
+            <div class="anime-card reveal" onclick="window.location.href='/anime/{{ anime.id }}'">
+                <div class="card-image">
+                    <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}" loading="lazy">
+                    <div class="card-overlay">
+                        <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                    <div class="card-meta">
+                        <span class="card-format">{{ anime.format }}</span>
+                        <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const searchInput = document.getElementById('searchInput');
+let debounceTimer;
+
+searchInput.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        const query = e.target.value;
+        if (query.length >= 2) {
+            window.location.href = `/search?q=${encodeURIComponent(query)}`;
+        } else if (query.length === 0 && window.location.pathname === '/search') {
+            // Stay on search page
+        }
+    }, 500);
+});
+
+searchInput.focus();
+
+function searchFor(term) {
+    window.location.href = `/search?q=${encodeURIComponent(term)}`;
+}
+</script>
+{% endblock %}

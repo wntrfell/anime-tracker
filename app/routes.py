@@ -13,14 +13,34 @@ def set_language(lang):
 def index():
     popular = get_popular_anime()
     trending = get_trending_anime()
-    return render_template('index.html', popular=popular, trending=trending)
+    featured = trending[:10] if trending else []
+    return render_template('index.html', popular=popular, trending=trending, featured=featured)
 
 @bp.route('/search')
-def search():
+def search_page():
     query = request.args.get('q', '')
-    page = request.args.get('page', 1, type=int)
-    results = search_anime(query, page)
+    results = []
+    if query:
+        results = search_anime(query)
+    return render_template('search.html', query=query, results=results)
+
+@bp.route('/search/api')
+def search_api():
+    query = request.args.get('q', '')
+    results = search_anime(query)
     return jsonify(results)
+
+@bp.route('/settings')
+def settings():
+    return render_template('settings.html')
+
+@bp.route('/mylist')
+def mylist():
+    return render_template('mylist.html')
+
+@bp.route('/watch_history')
+def watch_history():
+    return render_template('watch_history.html')
 
 @bp.route('/anime/<int:anime_id>')
 def anime_detail(anime_id):
