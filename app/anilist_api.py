@@ -40,6 +40,82 @@ def search_anime(query, page=1):
         return data['data']['Page']['media']
     return []
 
+def get_popular_anime(page=1):
+    graphql_query = """
+    query ($page: Int) {
+        Page(page: $page, perPage: 12) {
+            media(type: ANIME, sort: POPULARITY_DESC) {
+                id
+                title {
+                    romaji
+                    english
+                    native
+                }
+                coverImage {
+                    large
+                    color
+                }
+                bannerImage
+                format
+                status
+                episodes
+                averageScore
+                genres
+                description
+            }
+        }
+    }
+    """
+    
+    variables = {'page': page}
+    response = requests.post(
+        ANIList_API_URL,
+        json={'query': graphql_query, 'variables': variables}
+    )
+    
+    if response.status_code == 200:
+        data = response.json()
+        return data['data']['Page']['media']
+    return []
+
+def get_trending_anime(page=1):
+    graphql_query = """
+    query ($page: Int) {
+        Page(page: $page, perPage: 12) {
+            media(type: ANIME, sort: TRENDING_DESC) {
+                id
+                title {
+                    romaji
+                    english
+                    native
+                }
+                coverImage {
+                    large
+                    color
+                }
+                bannerImage
+                format
+                status
+                episodes
+                averageScore
+                genres
+                description
+            }
+        }
+    }
+    """
+    
+    variables = {'page': page}
+    response = requests.post(
+        ANIList_API_URL,
+        json={'query': graphql_query, 'variables': variables}
+    )
+    
+    if response.status_code == 200:
+        data = response.json()
+        return data['data']['Page']['media']
+    return []
+
 def get_anime_by_id(anime_id):
     graphql_query = """
     query ($id: Int) {

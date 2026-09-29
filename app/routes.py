@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, jsonify
-from app.anilist_api import search_anime, get_anime_by_id
+from app.anilist_api import search_anime, get_anime_by_id, get_popular_anime, get_trending_anime
 
 bp = Blueprint('main', __name__)
 
@@ -11,7 +11,9 @@ def set_language(lang):
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+    popular = get_popular_anime()
+    trending = get_trending_anime()
+    return render_template('index.html', popular=popular, trending=trending)
 
 @bp.route('/search')
 def search():

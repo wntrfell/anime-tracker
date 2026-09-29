@@ -11,9 +11,49 @@
            autocomplete="off">
 </div>
 
-<div class="anime-grid" id="animeGrid">
-    <!-- Аниме карточки будут здесь -->
-</div>
+<!-- Секция Trending -->
+<section class="anime-section">
+    <h2 class="section-title">{{ _('🔥 Trending Now') }}</h2>
+    <div class="anime-grid" id="trendingGrid">
+        {% for anime in trending %}
+        <div class="anime-card" onclick="window.location.href='/anime/{{ anime.id }}'">
+            <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
+            <div class="anime-card-info">
+                <div class="anime-card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                <div class="anime-card-meta">
+                    <span>{{ anime.format }}</span>
+                    <span class="score">⭐ {{ anime.averageScore or 'N/A' }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Секция Popular -->
+<section class="anime-section">
+    <h2 class="section-title">{{ _('⭐ Most Popular') }}</h2>
+    <div class="anime-grid" id="popularGrid">
+        {% for anime in popular %}
+        <div class="anime-card" onclick="window.location.href='/anime/{{ anime.id }}'">
+            <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
+            <div class="anime-card-info">
+                <div class="anime-card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                <div class="anime-card-meta">
+                    <span>{{ anime.format }}</span>
+                    <span class="score">⭐ {{ anime.averageScore or 'N/A' }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Результаты поиска (скрыты по умолчанию) -->
+<section class="anime-section" id="searchResults" style="display: none;">
+    <h2 class="section-title">{{ _('🔍 Search Results') }}</h2>
+    <div class="anime-grid" id="animeGrid"></div>
+</section>
 {% endblock %}
 
 {% block scripts %}
@@ -27,7 +67,21 @@ document.getElementById('searchInput').addEventListener('input', debounce(search
 
 async function searchAnime() {
     const query = document.getElementById('searchInput').value;
-    if (query.length < 2) return;
+    const searchResults = document.getElementById('searchResults');
+    const trendingSection = document.querySelector('.anime-section:nth-child(2)');
+    const popularSection = document.querySelector('.anime-section:nth-child(3)');
+    
+    if (query.length < 2) {
+        searchResults.style.display = 'none';
+        trendingSection.style.display = 'block';
+        popularSection.style.display = 'block';
+        return;
+    }
+    
+    // Скрываем секции при поиске
+    trendingSection.style.display = 'none';
+    popularSection.style.display = 'none';
+    searchResults.style.display = 'block';
     
     const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
     const animeList = await response.json();
@@ -36,6 +90,11 @@ async function searchAnime() {
 
 function displayAnime(animeList) {
     const grid = document.getElementById('animeGrid');
+    if (animeList.length === 0) {
+        grid.innerHTML = '<p style="color: #8b6f9e;">Nothing found</p>';
+        return;
+    }
+    
     grid.innerHTML = animeList.map(anime => `
         <div class="anime-card" onclick="window.location.href='/anime/${anime.id}'">
             <img src="${anime.coverImage.large}" alt="${anime.title.romaji}">

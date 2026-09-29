@@ -185,3 +185,14 @@ body {
         padding: 1rem;
     }
 }
+.anime-section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-light-pink);
+    border-left: 4px solid var(--color-pink);
+    padding-left: 1rem;
+}
