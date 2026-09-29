@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('language', 'en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Anime Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">🎌 Anime Tracker</div>
+            <div class="language-switcher">
+                <button onclick="setLanguage('en')" class="{{ 'active' if session.get('language') == 'en' else '' }}">EN</button>
+                <button onclick="setLanguage('ru')" class="{{ 'active' if session.get('language') == 'ru' else '' }}">RU</button>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

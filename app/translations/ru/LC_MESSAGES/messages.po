@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid "Search anime..."
+msgstr "Поиск аниме..."
+
+msgid "Anime"
+msgstr "Аниме"
+
+msgid "Manga"
+msgstr "Манга"
+
+msgid "My List"
+msgstr "Мой список"

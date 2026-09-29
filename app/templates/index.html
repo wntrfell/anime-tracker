@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Home') }} - Anime Tracker{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <input type="text" 
+           class="search-box" 
+           id="searchInput" 
+           placeholder="{{ _('Search anime...') }}"
+           autocomplete="off">
+</div>
+
+<div class="anime-grid" id="animeGrid">
+    <!-- Аниме карточки будут здесь -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function setLanguage(lang) {
+    fetch(`/set_language/${lang}`)
+        .then(() => window.location.reload());
+}
+
+document.getElementById('searchInput').addEventListener('input', debounce(searchAnime, 500));
+
+async function searchAnime() {
+    const query = document.getElementById('searchInput').value;
+    if (query.length < 2) return;
+    
+    const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+    const animeList = await response.json();
+    displayAnime(animeList);
+}
+
+function displayAnime(animeList) {
+    const grid = document.getElementById('animeGrid');
+    grid.innerHTML = animeList.map(anime => `
+        <div class="anime-card" onclick="window.location.href='/anime/${anime.id}'">
+            <img src="${anime.coverImage.large}" alt="${anime.title.romaji}">
+            <div class="anime-card-info">
+                <div class="anime-card-title">${anime.title.english || anime.title.romaji}</div>
+                <div class="anime-card-meta">
+                    <span>${anime.format}</span>
+                    <span class="score">⭐ ${anime.averageScore || 'N/A'}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+</script>
+{% endblock %}

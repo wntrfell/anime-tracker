@@ -1,0 +1,187 @@
+:root {
+    /* Цветовая палитра из вашего изображения */
+    --color-black: #0a0a0a;
+    --color-dark-purple: #2d1b4e;
+    --color-medium-purple: #5a3d7a;
+    --color-light-purple: #8b6f9e;
+    --color-pink: #c77d9f;
+    --color-light-pink: #e8b4c9;
+    
+    /* Градиенты */
+    --gradient-primary: linear-gradient(135deg, var(--color-dark-purple) 0%, var(--color-pink) 100%);
+    --gradient-bg: linear-gradient(180deg, var(--color-black) 0%, var(--color-dark-purple) 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--gradient-bg);
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* Навигация */
+.navbar {
+    background: rgba(10, 10, 10, 0.95);
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--color-medium-purple);
+}
+
+.navbar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.language-switcher button {
+    background: transparent;
+    border: 2px solid var(--color-pink);
+    color: var(--color-light-pink);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: 0.5rem;
+}
+
+.language-switcher button:hover,
+.language-switcher button.active {
+    background: var(--color-pink);
+    color: var(--color-black);
+}
+
+/* Основной контент */
+.main-content {
+    margin-top: 80px;
+    padding: 2rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Поиск */
+.search-container {
+    margin-bottom: 3rem;
+}
+
+.search-box {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--color-medium-purple);
+    border-radius: 50px;
+    background: rgba(45, 27, 78, 0.5);
+    color: white;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-box:focus {
+    border-color: var(--color-pink);
+    box-shadow: 0 0 20px rgba(199, 125, 159, 0.3);
+}
+
+/* Сетка аниме */
+.anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.anime-card {
+    background: rgba(45, 27, 78, 0.6);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: 1px solid var(--color-medium-purple);
+}
+
+.anime-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(199, 125, 159, 0.4);
+}
+
+.anime-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+
+.anime-card-info {
+    padding: 1rem;
+}
+
+.anime-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-light-pink);
+}
+
+.anime-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--color-light-purple);
+}
+
+.score {
+    background: var(--color-pink);
+    color: var(--color-black);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Кнопки */
+.btn {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(199, 125, 159, 0.5);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .anime-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .navbar {
+        padding: 1rem;
+    }
+}
