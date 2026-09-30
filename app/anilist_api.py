@@ -2,11 +2,11 @@ import requests
 
 ANIList_API_URL = "https://graphql.anilist.co"
 
-def search_anime(query, page=1):
+def search_anime(query, page=1, is_adult=False):
     graphql_query = """
-    query ($search: String, $page: Int) {
+    query ($search: String, $page: Int, $isAdult: Boolean) {
         Page(page: $page, perPage: 20) {
-            media(search: $search, type: ANIME) {
+            media(search: $search, type: ANIME, isAdult: $isAdult) {
                 id
                 title {
                     romaji
@@ -29,7 +29,7 @@ def search_anime(query, page=1):
     }
     """
     
-    variables = {'search': query, 'page': page}
+    variables = {'search': query, 'page': page, 'isAdult': is_adult}
     response = requests.post(
         ANIList_API_URL,
         json={'query': graphql_query, 'variables': variables}
@@ -40,11 +40,11 @@ def search_anime(query, page=1):
         return data['data']['Page']['media']
     return []
 
-def get_popular_anime(page=1):
+def get_popular_anime(page=1, is_adult=False):
     graphql_query = """
-    query ($page: Int) {
+    query ($page: Int, $isAdult: Boolean) {
         Page(page: $page, perPage: 12) {
-            media(type: ANIME, sort: POPULARITY_DESC) {
+            media(type: ANIME, sort: POPULARITY_DESC, isAdult: $isAdult) {
                 id
                 title {
                     romaji
@@ -67,7 +67,7 @@ def get_popular_anime(page=1):
     }
     """
     
-    variables = {'page': page}
+    variables = {'page': page, 'isAdult': is_adult}
     response = requests.post(
         ANIList_API_URL,
         json={'query': graphql_query, 'variables': variables}
@@ -78,11 +78,11 @@ def get_popular_anime(page=1):
         return data['data']['Page']['media']
     return []
 
-def get_trending_anime(page=1):
+def get_trending_anime(page=1, is_adult=False):
     graphql_query = """
-    query ($page: Int) {
+    query ($page: Int, $isAdult: Boolean) {
         Page(page: $page, perPage: 12) {
-            media(type: ANIME, sort: TRENDING_DESC) {
+            media(type: ANIME, sort: TRENDING_DESC, isAdult: $isAdult) {
                 id
                 title {
                     romaji
@@ -105,7 +105,7 @@ def get_trending_anime(page=1):
     }
     """
     
-    variables = {'page': page}
+    variables = {'page': page, 'isAdult': is_adult}
     response = requests.post(
         ANIList_API_URL,
         json={'query': graphql_query, 'variables': variables}
@@ -160,3 +160,53 @@ def get_anime_by_id(anime_id):
         data = response.json()
         return data['data']['Media']
     return None
+
+def get_popular_manga(page=1, is_adult=False):
+    graphql_query = """
+    query ($page: Int, $isAdult: Boolean) {
+        Page(page: $page, perPage: 12) {
+            media(type: MANGA, sort: POPULARITY_DESC, isAdult: $isAdult) {
+                id
+                title { romaji english native }
+                coverImage { large color }
+                bannerImage
+                format
+                status
+                chapters
+                averageScore
+                genres
+                description
+            }
+        }
+    }
+    """
+    variables = {'page': page, 'isAdult': is_adult}
+    response = requests.post(ANIList_API_URL, json={'query': graphql_query, 'variables': variables})
+    if response.status_code == 200:
+        return response.json()['data']['Page']['media']
+    return []
+
+def get_trending_manga(page=1, is_adult=False):
+    graphql_query = """
+    query ($page: Int, $isAdult: Boolean) {
+        Page(page: $page, perPage: 12) {
+            media(type: MANGA, sort: TRENDING_DESC, isAdult: $isAdult) {
+                id
+                title { romaji english native }
+                coverImage { large color }
+                bannerImage
+                format
+                status
+                chapters
+                averageScore
+                genres
+                description
+            }
+        }
+    }
+    """
+    variables = {'page': page, 'isAdult': is_adult}
+    response = requests.post(ANIList_API_URL, json={'query': graphql_query, 'variables': variables})
+    if response.status_code == 200:
+        return response.json()['data']['Page']['media']
+    return []

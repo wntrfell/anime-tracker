@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Anime Tracker{% endblock %}
+
+{% block content %}
+<div class="list-page reveal">
+    <div class="page-header">
+        <h1 class="page-title">{{ title }}</h1>
+    </div>
+    
+    <div class="anime-grid">
+        {% for item in results %}
+        <div class="anime-card reveal visible" onclick="window.location.href='/anime/{{ item.id }}'">
+            <div class="card-image">
+                <img src="{{ item.coverImage.large }}" alt="{{ item.title.romaji }}">
+                <div class="card-overlay">
+                    <div class="card-score">⭐ {{ item.averageScore or 'N/A' }}</div>
+                </div>
+                <div class="card-hover-info">
+                    <div class="hover-play">▶</div>
+                    <div class="hover-title">{{ item.title.english or item.title.romaji }}</div>
+                    <div class="hover-meta">{{ item.format }} • ⭐ {{ item.averageScore or 'N/A' }}</div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">{{ item.title.english or item.title.romaji }}</div>
+                <div class="card-meta">
+                    <span class="card-format">{{ item.format }}</span>
+                    <span class="card-episodes">{{ item.episodes or item.chapters or '?' }} {{ 'ep' if item.episodes else 'ch' }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="/see_all/{{ content_type }}?page={{ page - 1 }}" class="btn btn-secondary">← Previous</a>
+        {% endif %}
+        <a href="/see_all/{{ content_type }}?page={{ page + 1 }}" class="btn btn-primary">Next →</a>
+    </div>
+</div>
+{% endblock %}

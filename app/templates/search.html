@@ -29,29 +29,36 @@
         </div>
     </div>
     
-    <div class="search-results" id="searchResults">
-        {% if query %}
-        <h2 class="results-title">{{ _('Results for') }} "{{ query }}"</h2>
-        <div class="anime-grid">
-            {% for anime in results %}
-            <div class="anime-card reveal" onclick="window.location.href='/anime/{{ anime.id }}'">
-                <div class="card-image">
-                    <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}" loading="lazy">
-                    <div class="card-overlay">
-                        <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
+    <div class="search-results">
+        <div id="resultsContainer">
+            {% if query %}
+            <h2 class="results-title">{{ _('Results for') }} "{{ query }}"</h2>
+            <div class="anime-grid">
+                {% for anime in results %}
+                <div class="anime-card reveal visible" onclick="window.location.href='/anime/{{ anime.id }}'">
+                    <div class="card-image">
+                        <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
+                        <div class="card-overlay">
+                            <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
+                        </div>
+                        <div class="card-hover-info">
+                            <div class="hover-play">▶</div>
+                            <div class="hover-title">{{ anime.title.english or anime.title.romaji }}</div>
+                            <div class="hover-meta">{{ anime.format }} • ⭐ {{ anime.averageScore or 'N/A' }}</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                        <div class="card-meta">
+                            <span class="card-format">{{ anime.format }}</span>
+                            <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
+                        </div>
                     </div>
                 </div>
-                <div class="card-info">
-                    <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
-                    <div class="card-meta">
-                        <span class="card-format">{{ anime.format }}</span>
-                        <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
@@ -63,20 +70,60 @@ let debounceTimer;
 
 searchInput.addEventListener('input', (e) => {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const query = e.target.value;
+    const query = e.target.value;
+    
+    debounceTimer = setTimeout(async () => {
         if (query.length >= 2) {
-            window.location.href = `/search?q=${encodeURIComponent(query)}`;
-        } else if (query.length === 0 && window.location.pathname === '/search') {
-            // Stay on search page
+            const response = await fetch(`/search/api?q=${encodeURIComponent(query)}`);
+            const results = await response.json();
+            displayResults(results, query);
+        } else if (query.length === 0) {
+            document.getElementById('resultsContainer').innerHTML = '';
         }
     }, 500);
 });
 
+function displayResults(results, query) {
+    const container = document.getElementById('resultsContainer');
+    if (results.length === 0) {
+        container.innerHTML = '<p class="no-results">Nothing found</p>';
+        return;
+    }
+    
+    container.innerHTML = `
+        <h2 class="results-title">Results for "${query}"</h2>
+        <div class="anime-grid">
+            ${results.map(anime => `
+                <div class="anime-card reveal visible" onclick="window.location.href='/anime/${anime.id}'">
+                    <div class="card-image">
+                        <img src="${anime.coverImage.large}" alt="${anime.title.romaji}">
+                        <div class="card-overlay">
+                            <div class="card-score">⭐ ${anime.averageScore || 'N/A'}</div>
+                        </div>
+                        <div class="card-hover-info">
+                            <div class="hover-play">▶</div>
+                            <div class="hover-title">${anime.title.english || anime.title.romaji}</div>
+                            <div class="hover-meta">${anime.format} • ⭐ ${anime.averageScore || 'N/A'}</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">${anime.title.english || anime.title.romaji}</div>
+                        <div class="card-meta">
+                            <span class="card-format">${anime.format}</span>
+                            <span class="card-episodes">${anime.episodes || '?'} ep</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
 searchInput.focus();
 
 function searchFor(term) {
-    window.location.href = `/search?q=${encodeURIComponent(term)}`;
+    searchInput.value = term;
+    searchInput.dispatchEvent(new Event('input'));
 }
 </script>
 {% endblock %}

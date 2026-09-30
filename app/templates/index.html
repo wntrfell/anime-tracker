@@ -33,12 +33,6 @@
                 </p>
                 <div class="hero-buttons">
                     <a href="/anime/{{ anime.id }}" class="btn btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <polygon points="5 3 19 12 5 21 5 3"/>
-                        </svg>
-                        {{ _('Watch Now') }}
-                    </a>
-                    <a href="/anime/{{ anime.id }}" class="btn btn-secondary">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
                             <line x1="12" y1="16" x2="12" y2="12"/>
@@ -74,7 +68,7 @@
         <h2 class="section-title">
             {{ _('Trending Now') }}
         </h2>
-        <a href="/search?type=trending" class="see-all">{{ _('See All') }} →</a>
+        <a href="/see_all/trending_anime" class="see-all">{{ _('See All') }} →</a>
     </div>
     <div class="anime-grid">
         {% for anime in trending %}
@@ -119,6 +113,68 @@
                 <div class="card-meta">
                     <span class="card-format">{{ anime.format }}</span>
                     <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<!-- Trending Manga Section -->
+<section class="content-section reveal">
+    <div class="section-header">
+        <h2 class="section-title">{{ _('Trending Manga') }}</h2>
+        <a href="/see_all/trending_manga" class="see-all">{{ _('See All') }} →</a>
+    </div>
+    <div class="anime-grid">
+        {% for manga in trending_manga %}
+        <div class="anime-card reveal" onclick="window.location.href='/anime/{{ manga.id }}'">
+            <div class="card-image">
+                <img src="{{ manga.coverImage.large }}" alt="{{ manga.title.romaji }}" loading="lazy">
+                <div class="card-overlay">
+                    <div class="card-score">⭐ {{ manga.averageScore or 'N/A' }}</div>
+                </div>
+                <div class="card-hover-info">
+                    <div class="hover-play">▶</div>
+                    <div class="hover-title">{{ manga.title.english or manga.title.romaji }}</div>
+                    <div class="hover-meta">{{ manga.format }} • ⭐ {{ manga.averageScore or 'N/A' }}</div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">{{ manga.title.english or manga.title.romaji }}</div>
+                <div class="card-meta">
+                    <span class="card-format">{{ manga.format }}</span>
+                    <span class="card-episodes">{{ manga.chapters or '?' }} ch</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Popular Manga Section -->
+<section class="content-section reveal">
+    <div class="section-header">
+        <h2 class="section-title">{{ _('Most Popular Manga') }}</h2>
+        <a href="/see_all/popular_manga" class="see-all">{{ _('See All') }} →</a>
+    </div>
+    <div class="anime-grid">
+        {% for manga in popular_manga %}
+        <div class="anime-card reveal" onclick="window.location.href='/anime/{{ manga.id }}'">
+            <div class="card-image">
+                <img src="{{ manga.coverImage.large }}" alt="{{ manga.title.romaji }}" loading="lazy">
+                <div class="card-overlay">
+                    <div class="card-score">⭐ {{ manga.averageScore or 'N/A' }}</div>
+                </div>
+                <div class="card-hover-info">
+                    <div class="hover-play">▶</div>
+                    <div class="hover-title">{{ manga.title.english or manga.title.romaji }}</div>
+                    <div class="hover-meta">{{ manga.format }} • ⭐ {{ manga.averageScore or 'N/A' }}</div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">{{ manga.title.english or manga.title.romaji }}</div>
+                <div class="card-meta">
+                    <span class="card-format">{{ manga.format }}</span>
+                    <span class="card-episodes">{{ manga.chapters or '?' }} ch</span>
                 </div>
             </div>
         </div>
