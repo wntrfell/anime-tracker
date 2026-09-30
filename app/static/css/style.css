@@ -71,6 +71,12 @@ body {
     color: var(--color-pink);
 }
 
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
 /* Nav Pills */
 .nav-pills {
     display: flex;
