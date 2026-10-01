@@ -449,9 +449,22 @@ body {
 .section-title {
     font-size: 1.8rem;
     font-weight: 700;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.75rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, rgba(90, 61, 122, 0.3) 0%, rgba(199, 125, 159, 0.2) 100%);
+    border: 2px solid var(--color-pink);
+    border-radius: 12px;
+    color: var(--color-light-pink);
+    text-shadow: 0 0 20px rgba(199, 125, 159, 0.3);
+    transition: var(--transition);
+}
+
+.section-title:hover {
+    border-color: var(--color-light-pink);
+    box-shadow: 0 0 30px rgba(199, 125, 159, 0.4);
+    transform: translateY(-2px);
 }
 
 .title-icon {
