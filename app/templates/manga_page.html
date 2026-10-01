@@ -3,10 +3,10 @@
 {% block title %}{{ _('Manga') }} - Shiori{% endblock %}
 
 {% block content %}
-<div class="list-page reveal">
-    <div class="page-header">
-        <h1 class="page-title">{{ _('All Manga') }}</h1>
-        <p class="page-subtitle">{{ _('Discover and track manga') }}</p>
+<section class="content-section reveal">
+    <div class="section-header">
+        <h1 class="section-title">{{ _('All Manga') }}</h1>
+        <p class="section-subtitle">{{ _('Discover and track manga') }}</p>
     </div>
     
     <div class="anime-grid">
@@ -41,5 +41,5 @@
         <span class="page-info">{{ _('Page') }} {{ page }}</span>
         <a href="/manga-page?page={{ page + 1 }}" class="btn btn-primary">{{ _('Next') }} →</a>
     </div>
-</div>
+</section>
 {% endblock %}

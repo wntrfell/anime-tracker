@@ -472,9 +472,8 @@ body {
 /* Anime Grid */
 .anime-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.5rem;
-    padding: 0 2rem;
 }
 
 .anime-card {
@@ -1001,4 +1000,11 @@ body {
 .page-info {
     color: var(--color-text-muted);
     font-weight: 500;
+}
+
+.section-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    font-weight: 400;
 }
