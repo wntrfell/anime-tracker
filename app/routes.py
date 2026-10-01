@@ -22,11 +22,11 @@ def set_adult(value):
 def index():
     is_adult = session.get('show_adult', False)
     
-    # 36 карточек = 3 ряда по 12
-    popular = get_popular_anime(per_page=36, is_adult=is_adult)
-    trending = get_trending_anime(per_page=36, is_adult=is_adult)
-    popular_manga = get_popular_manga(per_page=36, is_adult=is_adult)
-    trending_manga = get_trending_manga(per_page=36, is_adult=is_adult)
+    # Главная страница - всегда 24 постера (2 ряда по 12)
+    popular = get_popular_anime(per_page=24, is_adult=is_adult)
+    trending = get_trending_anime(per_page=24, is_adult=is_adult)
+    popular_manga = get_popular_manga(per_page=24, is_adult=is_adult)
+    trending_manga = get_trending_manga(per_page=24, is_adult=is_adult)
     
     featured = trending[:10] if trending else []
     
@@ -67,14 +67,16 @@ def watch_history():
 def anime_page():
     is_adult = session.get('show_adult', False)
     page = request.args.get('page', 1, type=int)
-    popular = get_popular_anime(page=page, per_page=50, is_adult=is_adult)
+    # Страница аниме - 72 постера (6 рядов по 12)
+    popular = get_popular_anime(page=page, per_page=72, is_adult=is_adult)
     return render_template('anime_page.html', items=popular, page=page, content_type='anime')
 
 @bp.route('/manga-page')
 def manga_page():
     is_adult = session.get('show_adult', False)
     page = request.args.get('page', 1, type=int)
-    popular = get_popular_manga(page=page, per_page=50, is_adult=is_adult)
+    # Страница манги - 72 постера (6 рядов по 12)
+    popular = get_popular_manga(page=page, per_page=72, is_adult=is_adult)
     return render_template('manga_page.html', items=popular, page=page, content_type='manga')
 
 @bp.route('/see_all/<content_type>')
