@@ -22,10 +22,11 @@ def set_adult(value):
 def index():
     is_adult = session.get('show_adult', False)
     
-    popular = get_popular_anime(is_adult=is_adult)
-    trending = get_trending_anime(is_adult=is_adult)
-    popular_manga = get_popular_manga(is_adult=is_adult)
-    trending_manga = get_trending_manga(is_adult=is_adult)
+    # 36 карточек = 3 ряда по 12
+    popular = get_popular_anime(per_page=36, is_adult=is_adult)
+    trending = get_trending_anime(per_page=36, is_adult=is_adult)
+    popular_manga = get_popular_manga(per_page=36, is_adult=is_adult)
+    trending_manga = get_trending_manga(per_page=36, is_adult=is_adult)
     
     featured = trending[:10] if trending else []
     
