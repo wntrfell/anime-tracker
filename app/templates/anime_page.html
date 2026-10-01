@@ -9,7 +9,7 @@
         <p class="section-subtitle">{{ _('Discover and track anime') }}</p>
     </div>
     
-    <div class="anime-grid">
+    <div class="anime-grid page-grid">
         {% for anime in items %}
         <div class="anime-card reveal visible" onclick="window.location.href='/anime/{{ anime.id }}'">
             <div class="card-image">

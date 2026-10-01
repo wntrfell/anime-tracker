@@ -67,14 +67,14 @@ def watch_history():
 def anime_page():
     is_adult = session.get('show_adult', False)
     page = request.args.get('page', 1, type=int)
-    popular = get_popular_anime(page=page, per_page=72, is_adult=is_adult)
+    popular = get_popular_anime(page=page, per_page=60, is_adult=is_adult)
     return render_template('anime_page.html', items=popular, page=page, content_type='anime')
 
 @bp.route('/manga-page')
 def manga_page():
     is_adult = session.get('show_adult', False)
     page = request.args.get('page', 1, type=int)
-    popular = get_popular_manga(page=page, per_page=72, is_adult=is_adult)
+    popular = get_popular_manga(page=page, per_page=60, is_adult=is_adult)
     return render_template('manga_page.html', items=popular, page=page, content_type='manga')
 
 @bp.route('/see_all/<content_type>')
