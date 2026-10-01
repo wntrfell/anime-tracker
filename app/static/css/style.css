@@ -1015,32 +1015,8 @@ body {
     font-weight: 400;
 }
 
-/* Manga Grid - same styles as anime-grid */
 .manga-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.5rem;
-}
-
-.manga-grid.page-grid {
-    grid-template-columns: repeat(10, 1fr);
-    gap: 1rem;
-}
-
-@media (max-width: 1400px) {
-    .manga-grid.page-grid {
-        grid-template-columns: repeat(8, 1fr);
-    }
-}
-
-@media (max-width: 1024px) {
-    .manga-grid.page-grid {
-        grid-template-columns: repeat(6, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .manga-grid.page-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
 }
