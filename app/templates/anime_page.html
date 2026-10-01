@@ -5,68 +5,41 @@
 {% block content %}
 <div class="list-page reveal">
     <div class="page-header">
-        <h1 class="page-title">{{ _('Anime') }}</h1>
+        <h1 class="page-title">{{ _('All Anime') }}</h1>
         <p class="page-subtitle">{{ _('Discover and track anime') }}</p>
     </div>
     
-    <section class="content-section">
-        <div class="section-header">
-            <h2 class="section-title">{{ _('Trending Anime') }}</h2>
-        </div>
-        <div class="anime-grid">
-            {% for anime in trending %}
-            <div class="anime-card reveal" onclick="window.location.href='/anime/{{ anime.id }}'">
-                <div class="card-image">
-                    <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
-                    <div class="card-overlay">
-                        <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
-                    </div>
-                    <div class="card-hover-info">
-                        <div class="hover-play">▶</div>
-                        <div class="hover-title">{{ anime.title.english or anime.title.romaji }}</div>
-                        <div class="hover-meta">{{ anime.format }} • ⭐ {{ anime.averageScore or 'N/A' }}</div>
-                    </div>
+    <div class="anime-grid">
+        {% for anime in items %}
+        <div class="anime-card reveal visible" onclick="window.location.href='/anime/{{ anime.id }}'">
+            <div class="card-image">
+                <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}" loading="lazy">
+                <div class="card-overlay">
+                    <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
                 </div>
-                <div class="card-info">
-                    <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
-                    <div class="card-meta">
-                        <span class="card-format">{{ anime.format }}</span>
-                        <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
-                    </div>
+                <div class="card-hover-info">
+                    <div class="hover-play">▶</div>
+                    <div class="hover-title">{{ anime.title.english or anime.title.romaji }}</div>
+                    <div class="hover-meta">{{ anime.format }} • ⭐ {{ anime.averageScore or 'N/A' }}</div>
                 </div>
             </div>
-            {% endfor %}
+            <div class="card-info">
+                <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
+                <div class="card-meta">
+                    <span class="card-format">{{ anime.format }}</span>
+                    <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
+                </div>
+            </div>
         </div>
-    </section>
+        {% endfor %}
+    </div>
     
-    <section class="content-section">
-        <div class="section-header">
-            <h2 class="section-title">{{ _('Popular Anime') }}</h2>
-        </div>
-        <div class="anime-grid">
-            {% for anime in popular %}
-            <div class="anime-card reveal" onclick="window.location.href='/anime/{{ anime.id }}'">
-                <div class="card-image">
-                    <img src="{{ anime.coverImage.large }}" alt="{{ anime.title.romaji }}">
-                    <div class="card-overlay">
-                        <div class="card-score">⭐ {{ anime.averageScore or 'N/A' }}</div>
-                    </div>
-                    <div class="card-hover-info">
-                        <div class="hover-play">▶</div>
-                        <div class="hover-title">{{ anime.title.english or anime.title.romaji }}</div>
-                        <div class="hover-meta">{{ anime.format }} • ⭐ {{ anime.averageScore or 'N/A' }}</div>
-                    </div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">{{ anime.title.english or anime.title.romaji }}</div>
-                    <div class="card-meta">
-                        <span class="card-format">{{ anime.format }}</span>
-                        <span class="card-episodes">{{ anime.episodes or '?' }} ep</span>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="/anime-page?page={{ page - 1 }}" class="btn btn-secondary">← {{ _('Previous') }}</a>
+        {% endif %}
+        <span class="page-info">{{ _('Page') }} {{ page }}</span>
+        <a href="/anime-page?page={{ page + 1 }}" class="btn btn-primary">{{ _('Next') }} →</a>
+    </div>
 </div>
 {% endblock %}

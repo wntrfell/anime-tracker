@@ -135,3 +135,24 @@ msgstr "Аниме не найдено"
 
 msgid "Go Home"
 msgstr "На главную"
+
+msgid "Trending Anime"
+msgstr "Популярное аниме"
+
+msgid "Most Popular Anime"
+msgstr "Самые популярные аниме"
+
+msgid "All Anime"
+msgstr "Все аниме"
+
+msgid "All Manga"
+msgstr "Вся манга"
+
+msgid "Previous"
+msgstr "Назад"
+
+msgid "Next"
+msgstr "Вперёд"
+
+msgid "Page"
+msgstr "Страница"

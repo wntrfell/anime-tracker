@@ -987,3 +987,18 @@ body {
     font-size: 0.8rem;
     color: var(--color-text-muted);
 }
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding: 2rem 0;
+}
+
+.page-info {
+    color: var(--color-text-muted);
+    font-weight: 500;
+}

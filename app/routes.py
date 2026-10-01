@@ -81,16 +81,16 @@ def set_adult(value):
 @bp.route('/anime-page')
 def anime_page():
     is_adult = session.get('show_adult', False)
-    popular = get_popular_anime(is_adult=is_adult)
-    trending = get_trending_anime(is_adult=is_adult)
-    return render_template('anime_page.html', popular=popular, trending=trending)
+    page = request.args.get('page', 1, type=int)
+    popular = get_popular_anime(page=page, is_adult=is_adult)
+    return render_template('anime_page.html', items=popular, page=page, content_type='anime')
 
 @bp.route('/manga-page')
 def manga_page():
     is_adult = session.get('show_adult', False)
-    popular = get_popular_manga(is_adult=is_adult)
-    trending = get_trending_manga(is_adult=is_adult)
-    return render_template('manga_page.html', popular=popular, trending=trending)
+    page = request.args.get('page', 1, type=int)
+    popular = get_popular_manga(page=page, is_adult=is_adult)
+    return render_template('manga_page.html', items=popular, page=page, content_type='manga')
 
 @bp.route('/see_all/<content_type>')
 def see_all(content_type):
