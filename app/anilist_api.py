@@ -161,10 +161,10 @@ def get_anime_by_id(anime_id):
         return data['data']['Media']
     return None
 
-def get_popular_manga(page=1, per_page=12, is_adult=False):
+def get_popular_manga(page=1, per_page=24, is_adult=False):
     graphql_query = """
-    query ($page: Int, $isAdult: Boolean) {
-        Page(page: $page, perPage: 24) {
+    query ($page: Int, $perPage: Int, $isAdult: Boolean) {
+        Page(page: $page, perPage: $perPage) {
             media(type: MANGA, sort: POPULARITY_DESC, isAdult: $isAdult) {
                 id
                 title { romaji english native }
@@ -186,10 +186,10 @@ def get_popular_manga(page=1, per_page=12, is_adult=False):
         return response.json()['data']['Page']['media']
     return []
 
-def get_trending_manga(page=1, per_page=12, is_adult=False):
+def get_trending_manga(page=1, per_page=24, is_adult=False):
     graphql_query = """
-    query ($page: Int, $isAdult: Boolean) {
-        Page(page: $page, perPage: 24) {
+    query ($page: Int, $perPage: Int, $isAdult: Boolean) {
+        Page(page: $page, perPage: $perPage) {
             media(type: MANGA, sort: TRENDING_DESC, isAdult: $isAdult) {
                 id
                 title { romaji english native }

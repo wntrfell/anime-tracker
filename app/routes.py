@@ -25,10 +25,12 @@ def index():
     popular_manga = get_popular_manga(is_adult=is_adult)
     trending_manga = get_trending_manga(is_adult=is_adult)
     featured = trending[:10] if trending else []
-    return render_template('index.html',
-                           popular=popular, trending=trending,
-                           popular_manga=popular_manga, trending_manga=trending_manga,
-                           featured=featured)
+    return render_template('index.html', 
+                          popular=popular, 
+                          trending=trending,
+                          popular_manga=popular_manga, 
+                          trending_manga=trending_manga,
+                          featured=featured)
 
 @bp.route('/search')
 def search_page():
